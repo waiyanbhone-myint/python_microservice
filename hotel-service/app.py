@@ -17,19 +17,13 @@ def serialize(hotel):
     hotel["_id"] = str(hotel["_id"])
     return hotel
 
-
-# ─────────────────────────────────────────
 # GET /hotels — list all hotels
-# ─────────────────────────────────────────
 @app.route("/hotels", methods=["GET"])
 def get_hotels():
     hotels = list(hotels_collection.find())
     return jsonify([serialize(h) for h in hotels]), 200
 
-
-# ─────────────────────────────────────────
 # GET /hotels/<id> — get one hotel
-# ─────────────────────────────────────────
 @app.route("/hotels/<hotel_id>", methods=["GET"])
 def get_hotel(hotel_id):
     try:
@@ -42,10 +36,7 @@ def get_hotel(hotel_id):
 
     return jsonify(serialize(hotel)), 200
 
-
-# ─────────────────────────────────────────
 # POST /hotels — create a hotel
-# ─────────────────────────────────────────
 @app.route("/hotels", methods=["POST"])
 def create_hotel():
     data = request.json
@@ -70,10 +61,7 @@ def create_hotel():
 
     return jsonify(new_hotel), 201
 
-
-# ─────────────────────────────────────────
 # PUT /hotels/<id> — update a hotel
-# ─────────────────────────────────────────
 @app.route("/hotels/<hotel_id>", methods=["PUT"])
 def update_hotel(hotel_id):
     try:
@@ -93,10 +81,7 @@ def update_hotel(hotel_id):
     updated = hotels_collection.find_one({"_id": ObjectId(hotel_id)})
     return jsonify(serialize(updated)), 200
 
-
-# ─────────────────────────────────────────
 # DELETE /hotels/<id> — delete a hotel
-# ─────────────────────────────────────────
 @app.route("/hotels/<hotel_id>", methods=["DELETE"])
 def delete_hotel(hotel_id):
     try:
@@ -109,10 +94,7 @@ def delete_hotel(hotel_id):
 
     return jsonify({"message": "Hotel deleted"}), 200
 
-
-# ─────────────────────────────────────────
 # Health check
-# ─────────────────────────────────────────
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok", "service": "hotel-service"}), 200
